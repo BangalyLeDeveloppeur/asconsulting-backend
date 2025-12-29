@@ -3,6 +3,7 @@ import cors from "cors";
 
 import serviceRoutes from "./routes/serviceRoute.js";
 import slideRoutes from "./routes/slideRoutes.js";
+import temoignageRoute from "./routes/temoignageRoute.js"
 
 const app = express();
 const PORT = 5000;
@@ -26,6 +27,7 @@ app.use("/uploads", express.static("uploads"));
 // Routes API
 app.use("/api/services", serviceRoutes);
 app.use("/api/slide", slideRoutes);
+app.use("/api/temoignages", temoignageRoute);
 
 // Middleware de gestion d'erreurs
 app.use((err, req, res, next) => {

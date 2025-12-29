@@ -1,8 +1,7 @@
 import db from "../config/db.js";
 
-export const addService = (titre, description,callback) => {
-  const sql =
-    "INSERT INTO services (titre, description) VALUES (?, ?)";
+export const addService = (titre, description, callback) => {
+  const sql = "INSERT INTO services (titre, description) VALUES (?, ?)";
   db.query(sql, [titre, description], callback);
 };
 
