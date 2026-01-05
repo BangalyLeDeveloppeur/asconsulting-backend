@@ -7,7 +7,7 @@ export const uploadPhoto = (req, res) => {
     return res.status(400).json({ error: "Aucune image envoyée" });
   }
   const imagePath = `/uploads/${req.file.filename}`;
-  const sql = "INSERT INTO slide (image, titre, description) VALUES (?, ?, ?)"
+  const sql = "INSERT INTO slide (image, titre, description) VALUES (?, ?, ?)";
   db.query(sql, [imagePath, titre, description], (err, result) => {
     if (err) {
       console.error("Erreur SQL:", err);
