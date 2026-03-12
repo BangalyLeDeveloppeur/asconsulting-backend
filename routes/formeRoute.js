@@ -6,14 +6,13 @@ import {
   uploadForm,
   fetchForm,
 } from "../controllers/formController.js";
-//import { verifyToken } from "../middleware/AuthMiddlewere.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const router = express.Router();
 
-// config multer
+// Configuration multer pour les fichiers (si vous en avez besoin plus tard)
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, path.join(__dirname, "../uploads"));
@@ -25,8 +24,27 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-// routes
-router.post("/", upload.none(), uploadForm);
+// MIDDLEWARE IMPORTANT : Pour parser le JSON
+router.use(express.json()); // ← AJOUTEZ CECI
+router.use(express.urlencoded({ extended: true })); // ← AJOUTEZ CECI
+
+// Routes - une seule route pour gérer tous les formats
+router.post("/", (req, res, next) => {
+  // Vérifier le Content-Type
+  const contentType = req.headers['content-type'];
+  
+  if (contentType && contentType.includes('multipart/form-data')) {
+    // Si c'est un formulaire multipart, utiliser multer
+    upload.none()(req, res, (err) => {
+      if (err) return next(err);
+      uploadForm(req, res);
+    });
+  } else {
+    // Si c'est du JSON ou autre, passer directement
+    uploadForm(req, res);
+  }
+});
+
 router.get("/", fetchForm);
 
 export default router;

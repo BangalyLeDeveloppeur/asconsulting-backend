@@ -7,7 +7,7 @@ export const findAdminByEmail = (email, callback) => {
 };
 
 //Insérer un nouvel admin
-export const addAdmin = (email, password, role, callback) => {
-  const sql = "INSERT INTO admin (email, password) VALUES (?, ?, ?)";
+export const addAdmin = (email, password, callback) => {
+  const sql = "INSERT INTO admin (email, password) VALUES (?, ?)";
   db.query(sql, [email, password], callback);
 };
