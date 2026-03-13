@@ -15,5 +15,8 @@ db.connect((err) => {
   }
   console.log("✅ Connecté à MySQL");
 });
-
+// Tout en bas du fichier, avant export default db
+setTimeout(() => {
+  console.log("⏱️ Vérification MySQL :", db.state);
+}, 2000);
 export default db;
