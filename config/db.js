@@ -10,13 +10,20 @@ const db = mysql.createConnection({
 
 db.connect((err) => {
   if (err) {
-    console.error("❌ Erreur de connexion MySQL :", err.message);
+    console.error("❌ Erreur de connexion MySQL :", {
+      message: err.message,
+      code: err.code,
+      errno: err.errno,
+      sqlState: err.sqlState
+    });
     return;
   }
   console.log("✅ Connecté à MySQL");
 });
+
 // Tout en bas du fichier, avant export default db
 setTimeout(() => {
-  console.log("⏱️ Vérification MySQL :", db.state);
-}, 2000);
+  console.log("⏱️ Vérification MySQL (10s) :", db.state);
+}, 10000);
+
 export default db;
